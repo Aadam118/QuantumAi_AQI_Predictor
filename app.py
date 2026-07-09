@@ -1,7 +1,6 @@
 """
 Hybrid Quantum-Classical Neural Network — Air Quality Index (AQI) Predictor
 ============================================================================
-Deploy target: Streamlit on Hugging Face Spaces
 
 Architecture:
     Input (7 classical features)
@@ -267,4 +266,4 @@ with st.expander("ℹ️ About the AQI Scale"):
         """
     )
 
-st.caption("Built with PyTorch, PennyLane & Streamlit — deployed on Hugging Face Spaces.")
+st.caption("Built with PyTorch, PennyLane & Streamlit .")
