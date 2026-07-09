@@ -33,7 +33,7 @@ st.set_page_config(
 # 2. QUANTUM CIRCUIT DEFINITION
 # ----------------------------------------------------------------------------
 N_QUBITS = 4
-N_LAYERS = 3  # NOTE: must match the number of layers used during training.
+N_LAYERS = 2  # NOTE: must match the number of layers used during training.
               # If your saved .pth uses a different depth, change this value
               # so the weight tensor shapes match the checkpoint.
 
