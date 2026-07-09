@@ -180,26 +180,35 @@ if load_error:
 
 st.markdown("---")
 
-feature_names = [
-    "Temperature",
-    "Humidity",
-    "Wind Speed",
-    "Pressure",
-    "PM2.5 (normalized)",
-    "PM10 (normalized)",
-    "NO2 (normalized)",
-]
+# Helper function for scaling real values to [-1, 1] for the model
+def scale_val(val, min_val, max_val):
+    return 2.0 * ((val - min_val) / (max_val - min_val)) - 1.0
 
 left_col, right_col = st.columns([1, 1.3], gap="large")
 
 with left_col:
     st.subheader("🔧 Input Features")
-    st.write("Adjust the normalized sensor readings below:")
+    st.write("Adjust the real-world sensor readings below:")
 
-    feature_values = []
-    for name in feature_names:
-        val = st.slider(name, min_value=-1.0, max_value=1.0, value=0.0, step=0.01, key=name)
-        feature_values.append(val)
+    # Real-world UI Sliders
+    t_raw = st.slider("Temperature (°C)", -10.0, 50.0, 25.0)
+    h_raw = st.slider("Humidity (%)", 0.0, 100.0, 50.0)
+    w_raw = st.slider("Wind Speed (km/h)", 0.0, 100.0, 15.0)
+    p_raw = st.slider("Pressure (hPa)", 950.0, 1050.0, 1013.0)
+    pm25_raw = st.slider("PM2.5 (µg/m³)", 0.0, 500.0, 45.0)
+    pm10_raw = st.slider("PM10 (µg/m³)", 0.0, 500.0, 60.0)
+    no2_raw = st.slider("NO2 (µg/m³)", 0.0, 200.0, 20.0)
+
+    # Background scaling (Model ko strictly -1 se 1 ke beech hi numbers jayenge)
+    feature_values = [
+        scale_val(t_raw, -10.0, 50.0),
+        scale_val(h_raw, 0.0, 100.0),
+        scale_val(w_raw, 0.0, 100.0),
+        scale_val(p_raw, 950.0, 1050.0),
+        scale_val(pm25_raw, 0.0, 500.0),
+        scale_val(pm10_raw, 0.0, 500.0),
+        scale_val(no2_raw, 0.0, 200.0)
+    ]
 
     predict_clicked = st.button("🚀 Predict AQI", type="primary", use_container_width=True)
 
